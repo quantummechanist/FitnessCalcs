@@ -17,6 +17,11 @@ class Person():
         self.sex = None
         self.name = None
         self.hamwi_mass = None
+        self.bmi_actual = None
+        self.bmi_excess_mass = None
+        self.hamwi_base_mass = None
+        self.hamwi_mass_excess = None
+        self.bmi_mass_target = None
 
         # pull relevant keys from kwargs
         for prop in self.internal_props:
@@ -80,7 +85,7 @@ class Person():
         """ Find the person's bmi """
         self.bmi_actual = self.mass / self.height ** 2
         return self.bmi_actual
-    
+
     def bmi_mass_ideal(self, target=21):
         """ Find the target mass based on BMI"""
         self.bmi_mass_target = (self.height ** 2) * target
@@ -93,13 +98,12 @@ class Person():
 
     def excess_from_hamwi(self):
         """ Calculate the amount of excess weight present versus Hamwi method weight"""
-        
         if self.mass is None:
             raise ValueError("Require that mass property be set")
 
         self.hamwi_mass_excess = self.mass - self.hamwi_ideal_mass()
         return self.hamwi_mass_excess
-        
+
 
 if __name__ == '__main__':
 
