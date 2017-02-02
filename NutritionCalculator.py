@@ -76,19 +76,35 @@ class Person():
         self.hamwi_mass = excess_mass + floor_mass
         return self.hamwi_mass
 
+    def bmi(self):
+        """ Find the person's bmi """
+        self.bmi_actual = self.mass / self.height ** 2
+        return self.bmi_actual
+    
+    def bmi_mass_ideal(self, target=21):
+        """ Find the target mass based on BMI"""
+        self.bmi_mass_target = (self.height ** 2) * target
+
+    def excess_from_bmi(self, target=21):
+        """ Find the deviation from BMI recommended mass"""
+        self.bmi_mass_ideal()
+        self.bmi_excess_mass = self.mass - self.bmi_mass_target
+        return self.bmi_excess_mass
+
     def excess_from_hamwi(self):
         """ Calculate the amount of excess weight present versus Hamwi method weight"""
         
         if self.mass is None:
             raise ValueError("Require that mass property be set")
 
-        self.mass_excess = self.mass - self.hamwi_ideal_mass()
-        return self.mass_excess
+        self.hamwi_mass_excess = self.mass - self.hamwi_ideal_mass()
+        return self.hamwi_mass_excess
         
 
 if __name__ == '__main__':
 
-    bob = Person('female', 1.65, 65)
+    bob = Person('female', 1.60, 65)
     print(bob)
     print(bob.hamwi_ideal_mass())
     print(bob.excess_from_hamwi())
+    print(bob.excess_from_bmi())
